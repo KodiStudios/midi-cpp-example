@@ -23,20 +23,21 @@ using namespace std::chrono_literals;
 	midiFuncResult = midiFuncAndParams;                            \
 	if (midiFuncResult != MMSYSERR_NOERROR)                        \
 	{                                                              \
-		throw std::exception("Midi Error: " + midiFuncResult);     \
+		std::stringstream s;                                       \
+		s << "Midi Error: " << midiFuncResult;                     \
+		throw std::exception(s.str().c_str());                     \
 	}                                                              \
 }
 
 // Helper Function
 // If value falls out of limit, throws exception
-template<typename T>
-void VerifyLimit(T currentValue, T maxValue, const char* valueName)
+void VerifyLimit(uint32_t currentValue, uint32_t maxValue, const char* valueName)
 {
 	if (currentValue > maxValue)
 	{
 		std::stringstream s;
 		s << valueName << " Max: " << maxValue << " Current: " << currentValue;
-		throw new std::out_of_range(s.str().c_str());
+		throw std::out_of_range(s.str().c_str());
 	}
 }
 
@@ -64,8 +65,8 @@ void SetMidiInstrument(
 	// [2] Unused               : 0b 0000 0000
 	// [3] Unused               : 0b 0000 0000
 
-	VerifyLimit<uint8_t>(channel, 15, "Channel");
-	VerifyLimit<uint8_t>(instrument, 127, "Instrument");
+	VerifyLimit(channel, 15, "Channel");
+	VerifyLimit(instrument, 127, "Instrument");
 
 	const uint8_t SetInstrumentSignature = 0b1100;
 	uint8_t statusByte = SetInstrumentSignature << 4; // 0b 1100 0000
@@ -98,9 +99,9 @@ void SendMidiNote(
 	// Reference: https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html
 
 	// To Turn Note Off, simply pass 0 as Velocity (Volume)
-	VerifyLimit<uint8_t>(channel, 15, "Channel");
-	VerifyLimit<uint8_t>(pitch, 127, "Pitch");
-	VerifyLimit<uint8_t>(velocity, 127, "Velocity");
+	VerifyLimit(channel, 15, "Channel");
+	VerifyLimit(pitch, 127, "Pitch");
+	VerifyLimit(velocity, 127, "Velocity");
 
 	const uint8_t NoteOnSignature = 0b1001;
 	uint8_t statusByte = NoteOnSignature << 4; // 0b 1001 0000
@@ -117,30 +118,38 @@ void SendMidiNote(
 
 int main()
 {
-	HMIDIOUT midiOut;
-	VerifyMidi(midiOutOpen(
-		/*out*/ &midiOut,
-		/*uDeviceID*/ 0, // System's Midi device is at index 0
-		/*dwCallback*/ NULL,
-		/*dwInstance*/ NULL,
-		/*fdwOpen*/ CALLBACK_NULL
-	));
+	try
+	{
+		HMIDIOUT midiOut;
+		VerifyMidi(midiOutOpen(
+			/*out*/ &midiOut,
+			/*uDeviceID*/ 0, // System's Midi device is at index 0
+			/*dwCallback*/ NULL,
+			/*dwInstance*/ NULL,
+			/*fdwOpen*/ CALLBACK_NULL
+		));
 
-	// Set Instruments for Channels 0 and 1
-	SetMidiInstrument(midiOut, /*channel*/ 0, /*Grand Piano*/ 0);
-	SetMidiInstrument(midiOut, /*channel*/ 1, /*Guitar*/ 24);
+		// Set Instruments for Channels 0 and 1
+		SetMidiInstrument(midiOut, /*channel*/ 0, /*Grand Piano*/ 0);
+		SetMidiInstrument(midiOut, /*channel*/ 1, /*Guitar*/ 24);
 
-	std::cout << "Play Piano C Note\n";
-	SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 127); 
-	std::this_thread::sleep_for(3s);
-	SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 0); // Stop
+		std::cout << "Play Piano C Note\n";
+		SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 127);
+		std::this_thread::sleep_for(3s);
+		SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 0); // Stop
 
-	std::cout << "Play Guitar C Note\n";
-	SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 127);
-	std::this_thread::sleep_for(3s);
-	SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 0); // Stop
+		std::cout << "Play Guitar C Note\n";
+		SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 127);
+		std::this_thread::sleep_for(3s);
+		SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 0); // Stop
 
-	VerifyMidi(midiOutClose(midiOut));
+		VerifyMidi(midiOutClose(midiOut));
+
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Exception: " << e.what();
+	}
 
 	return 0;
 }
