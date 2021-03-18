@@ -58,7 +58,7 @@ void SetMidiInstrument(
 {
 	// Set Midi Instrument Protocol:
 	// [0] Status byte          : 0b 1100 CCCC
-	//     Set Instrument Signature      : 0b 1000
+	//     Set Instrument Signature      : 0b 1100
 	//     Channel 4-bits                : 0b CCCC
 	// [1] Instrument 7-bits    : 0b 0III IIII
 	// [2] Unused               : 0b 0000 0000
