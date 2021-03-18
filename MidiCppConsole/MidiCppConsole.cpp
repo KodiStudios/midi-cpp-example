@@ -144,11 +144,11 @@ int main()
 		SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 0); // Stop
 
 		VerifyMidi(midiOutClose(midiOut));
-
 	}
 	catch (const std::exception& e)
 	{
 		std::cout << "Exception: " << e.what();
+		return 1;
 	}
 
 	return 0;
