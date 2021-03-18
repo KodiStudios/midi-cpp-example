@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MidiCppConsole", "MidiCppConsole.vcxproj", "{0A7038CD-0087-4444-8265-BC7DF34B7A2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Debug|x86.ActiveCfg = Debug|Win32
+		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Debug|x86.Build.0 = Debug|Win32
+		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Release|x86.ActiveCfg = Release|Win32
+		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A52F69E0-6756-40E5-9082-3DD07923490E}
+	EndGlobalSection
+EndGlobal
