@@ -36,7 +36,7 @@ void VerifyLimit(uint32_t currentValue, uint32_t maxValue, const char* valueName
 	if (currentValue > maxValue)
 	{
 		std::stringstream s;
-		s << valueName << " Max: " << maxValue << " Current: " << currentValue;
+		s << valueName << " Current: " << currentValue << " Max: " << maxValue;
 		throw std::out_of_range(s.str().c_str());
 	}
 }
@@ -48,11 +48,11 @@ void VerifyLimit(uint32_t currentValue, uint32_t maxValue, const char* valueName
 // Midi's 4 bytes.
 union MidiData {
 	BYTE bData[4];
-	DWORD dwData{ 0 }; // Note: this zeros out all 4 bytes in bData
+	DWORD dwData{ 0 }; // Note: this zeros out all 4 bytes in bData array
 };
 
 void SetMidiInstrument(
-	HMIDIOUT midiOut,
+	HMIDIOUT hMidiOut,
 	uint8_t channel,       // 4 bits, 0 to 15
 	uint8_t instrument     // 7 bits, 0 to 127
 )
@@ -77,13 +77,13 @@ void SetMidiInstrument(
 	midiData.bData[1] = instrument;       // First MIDI data byte
 	// Bytes [2] and [3] are unused
 
-	VerifyMidi(midiOutShortMsg(midiOut, midiData.dwData));
+	VerifyMidi(midiOutShortMsg(hMidiOut, midiData.dwData));
 }
 
 // Plays Midi Note
 // To Stop playing, set velocity parameter to 0
 void SendMidiNote(
-	HMIDIOUT midiOut,
+	HMIDIOUT hMidiOut,
 	uint8_t channel,  // 4 bits, 0 to 15
 	uint8_t pitch,    // 7 bits, 0 to 127
 	uint8_t velocity  // 7 bits, 0 to 127
@@ -113,16 +113,16 @@ void SendMidiNote(
 	midiData.bData[2] = velocity;    // Second MIDI data byte
 	// Byte [3] is unused
 
-	VerifyMidi(midiOutShortMsg(midiOut, midiData.dwData));
+	VerifyMidi(midiOutShortMsg(hMidiOut, midiData.dwData));
 }
 
 int main()
 {
 	try
 	{
-		HMIDIOUT midiOut;
+		HMIDIOUT hMidiOut;
 		VerifyMidi(midiOutOpen(
-			/*out*/ &midiOut,
+			/*out*/ &hMidiOut,
 			/*uDeviceID*/ 0, // System's Midi device is at index 0
 			/*dwCallback*/ NULL,
 			/*dwInstance*/ NULL,
@@ -130,25 +130,25 @@ int main()
 		));
 
 		// Set Instruments for Channels 0 and 1
-		SetMidiInstrument(midiOut, /*channel*/ 0, /*Grand Piano*/ 0);
-		SetMidiInstrument(midiOut, /*channel*/ 1, /*Guitar*/ 24);
+		SetMidiInstrument(hMidiOut, /*channel*/ 0, /*Grand Piano*/ 0);
+		SetMidiInstrument(hMidiOut, /*channel*/ 1, /*Guitar*/ 24);
 
 		std::cout << "Play Piano C Note\n";
-		SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 127);
+		SendMidiNote(hMidiOut, /*channel*/ 0, /*note*/ 60, /*velocity*/ 127);
 		std::this_thread::sleep_for(3s);
-		SendMidiNote(midiOut, /*channel*/ 0, /*note*/ 0x3c, /*velocity*/ 0); // Stop
+		SendMidiNote(hMidiOut, /*channel*/ 0, /*note*/ 60, /*velocity*/ 0); // Stop
 
 		std::cout << "Play Guitar C Note\n";
-		SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 127);
+		SendMidiNote(hMidiOut, /*channel*/ 1, /*note*/ 60, /*velocity*/ 127);
 		std::this_thread::sleep_for(3s);
-		SendMidiNote(midiOut, /*channel*/ 1, /*note*/ 0x3c, /*velocity*/ 0); // Stop
+		SendMidiNote(hMidiOut, /*channel*/ 1, /*note*/ 60, /*velocity*/ 0); // Stop
 
-		VerifyMidi(midiOutClose(midiOut));
+		VerifyMidi(midiOutClose(hMidiOut));
 	}
 	catch (const std::exception& e)
 	{
 		std::cout << "Exception: " << e.what();
-		return 1;
+		throw;
 	}
 
 	return 0;
