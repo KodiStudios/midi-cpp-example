@@ -1,2 +1,2 @@
 # midi-cpp-console
-Plays Midi on Windows in a simple Console App
+Plays Midi Notes on Windows in a simple Console App
