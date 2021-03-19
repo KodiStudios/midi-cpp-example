@@ -1,6 +1,6 @@
 ## Introduction
 
-This project is a Demo of how to use Midi C++ Windows Apis to play Sound Notes.
+This project is a Demo of how to use Midi C++ Windows Apis to play Sample Sound Notes and Select Instruments.
 
 Source Code:  
 [MidiCppConsole.cpp](https://github.com/KodiStudios/midi-cpp-console/blob/main/MidiCppConsole/MidiCppConsole.cpp)
@@ -23,5 +23,10 @@ MMRESULT midiOutClose(...)
 
 Full Windows Midi Api Official Documentation:  
 [mmeapi](https://docs.microsoft.com/en-us/windows/win32/api/mmeapi/)
+
+## Links
+
+Midi Protocol:  
+https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html
 
 Cheers!
