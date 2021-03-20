@@ -9,9 +9,9 @@ Here's Midi C++ code to play C Note on Grand Piano:
 // Licensed under the MIT license.
 
 // REQUIREMENTS!
+// 
 // Add following lib file to C++ Linker:
 // winmm.lib
-//
 // For example, in Visual Studio:
 // Project > Properties > Configuration Properties > Linker > Input > Additional Dependencies
 // Add: winmm.lib
@@ -52,9 +52,10 @@ MidiMessage MakeSendNoteMessage(
 
 	// To Turn Note Off, simply pass 0 as Velocity (Volume)
 
-	const uint8_t NoteOnSignature = 0b1001; // 0b 0000 1001
-	uint8_t statusByte = NoteOnSignature << 4; // 0b 1001 0000
-	statusByte |= channel; // 0b 1001 CCCC
+	const uint8_t NoteOnSignature = 0b1001;    
+	uint8_t statusByte = NoteOnSignature;      // 0b 0000 1001
+	statusByte = statusByte << 4;              // 0b 1001 0000
+	statusByte = statusByte | channel;         // 0b 1001 CCCC
 
 	MidiMessage midiMessage;
 	midiMessage.bData[0] = statusByte;  // MIDI Status byte
@@ -92,8 +93,9 @@ MidiMessage MakeSelectInstrumentMessage(
 	// [3] Unused               : 0b 0000 0000
 
 	const uint8_t SetInstrumentSignature = 0b1100;
-	uint8_t statusByte = SetInstrumentSignature << 4; // 0b 1100 0000
-	statusByte |= channel; // 0b 1100 CCCC
+	uint8_t statusByte = SetInstrumentSignature; // 0b 0000 1100
+	statusByte = statusByte << 4;                // 0b 1100 0000
+	statusByte |= channel;                       // 0b 1100 CCCC
 
 	MidiMessage midiMessage;
 	midiMessage.bData[0] = statusByte;       // MIDI Status byte
