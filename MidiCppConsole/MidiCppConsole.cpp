@@ -1,3 +1,6 @@
+// Copyright (c) Kodi Studios 2021.
+// Licensed under the MIT license.
+
 // REQUIREMENTS!
 // Add following lib file to C++ Linker:
 // winmm.lib
@@ -9,11 +12,19 @@
 #include <Windows.h>
 
 #include <chrono>
-#include <iostream>
 #include <exception>
+#include <iostream>
 #include <thread>
 
 using namespace std::chrono_literals;
+
+class MidiException : public std::exception
+{
+public:
+	explicit MidiException(const char* message)
+		: std::exception(message)
+	{}
+};
 
 // Helper Macro
 // If Midi Api returns error, throws exception
@@ -25,7 +36,7 @@ using namespace std::chrono_literals;
 	{                                                              \
 		std::stringstream s;                                       \
 		s << "Midi Error: " << midiFuncResult;                     \
-		throw std::exception(s.str().c_str());                     \
+		throw MidiException(s.str().c_str());                     \
 	}                                                              \
 }
 
@@ -37,7 +48,7 @@ void VerifyLimit(uint32_t currentValue, uint32_t maxValue, const char* valueName
 	{
 		std::stringstream s;
 		s << valueName << " Current: " << currentValue << " Max: " << maxValue;
-		throw std::out_of_range(s.str().c_str());
+		throw std::invalid_argument(s.str().c_str());
 	}
 }
 
