@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MidiCppConsole", "MidiCppConsole.vcxproj", "{0A7038CD-0087-4444-8265-BC7DF34B7A2E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MidiCppConsoleTest", "..\MidiCppConsoleTest\MidiCppConsoleTest.vcxproj", "{451EA1FC-E49F-4870-9B4C-6D4767154419}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiCppConsoleTest", "..\MidiCppConsoleTest\MidiCppConsoleTest.csproj", "{79B8DB1B-AE79-44D6-8E5C-591F39CA0630}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Debug|x86.Build.0 = Debug|Win32
 		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Release|x86.ActiveCfg = Release|Win32
 		{0A7038CD-0087-4444-8265-BC7DF34B7A2E}.Release|x86.Build.0 = Release|Win32
-		{451EA1FC-E49F-4870-9B4C-6D4767154419}.Debug|x86.ActiveCfg = Debug|Win32
-		{451EA1FC-E49F-4870-9B4C-6D4767154419}.Debug|x86.Build.0 = Debug|Win32
-		{451EA1FC-E49F-4870-9B4C-6D4767154419}.Release|x86.ActiveCfg = Release|Win32
-		{451EA1FC-E49F-4870-9B4C-6D4767154419}.Release|x86.Build.0 = Release|Win32
+		{79B8DB1B-AE79-44D6-8E5C-591F39CA0630}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79B8DB1B-AE79-44D6-8E5C-591F39CA0630}.Debug|x86.Build.0 = Debug|Any CPU
+		{79B8DB1B-AE79-44D6-8E5C-591F39CA0630}.Release|x86.ActiveCfg = Release|Any CPU
+		{79B8DB1B-AE79-44D6-8E5C-591F39CA0630}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
