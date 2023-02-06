@@ -1,3 +1,3 @@
-# midi-cpp-console
+# midi-cpp-example
 
-<http://kodistudios.github.io/midi-cpp-console>
+<http://kodistudios.github.io/midi-cpp-example>
