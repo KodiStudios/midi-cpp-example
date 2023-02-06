@@ -1,6 +1,6 @@
 ## Introduction
 
-This project is a Demo of how to use Midi C++ Windows Apis to play Sample Sound Notes and Select Instruments.
+This project is a Demo of how to use Midi C++ Windows Apis to play any Note on Selected Instrument.
 
 ## Download 
 
