@@ -2,7 +2,17 @@
 
 This project is a Demo of how to use Midi C++ Windows Apis to play Sample Sound Notes and Select Instruments.
 
-Here's Midi C++ code to play Middle C Note on Guitar:
+## Download 
+
+Compiled App:  
+[MidiCppConsole.exe](https://github.com/KodiStudios/midi-cpp-console/releases/latest)
+
+Requirements: Windows  
+For example: Windows 7, Windows 10, Windows 11
+
+## Source Code 
+
+Here's Midi C++ source code to play Middle C Note on Guitar:
 
 ```C++
 // Copyright (c) Kodi Studios 2021.
@@ -134,17 +144,12 @@ int main()
 }
 ```
 
-Full Source Code:  
+Full Source Code in Repo:  
 [MidiCppConsole.cpp](https://github.com/KodiStudios/midi-cpp-console/blob/main/MidiCppConsole/MidiCppConsole.cpp)
-
-Compiled App:  
-[MidiCppConsole.exe](https://github.com/KodiStudios/midi-cpp-console/releases/latest)
 
 ## Details
 
-Project is a simple Console App and should run on any Windows OS, eg Windows 7, Windows 10.
-
-Midi Apis used:  
+Windows Midi Apis used:  
 ```C++
 MMRESULT midiOutOpen(...)
 MMRESULT midiOutShortMsg(...)
