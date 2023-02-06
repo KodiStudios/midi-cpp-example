@@ -16,11 +16,11 @@
 #include <iostream>
 #include <thread>
 
-// Midi message is 4 bytes.
+// Midi Message is 4 bytes.
 // Windows Midi midiOutShortMsg() Api passes
 // those 4 bytes as DWORD type.
-// Use Union structure to easily overlap DWORD onto 
-// Midi's 4 bytes.
+// Use C++ Union structure to easily overlap DWORD onto 
+// Midi's 4 bytes and initialize these bytes to 0
 union MidiMessage {
 	BYTE dataByte[4];
 	DWORD dataDWord{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
@@ -100,10 +100,10 @@ int main()
 		/*fdwOpen*/ CALLBACK_NULL
 	);
 
-	std::cout << "Select Instrument\n";
+	std::cout << "Select Midi Instrument: Guitar\n";
 	SelectMidiInstrument(hMidiOut, /*channel*/ 0, /*instrument: Guitar*/ 24);
 
-	std::cout << "Start Playing Note\n";
+	std::cout << "Start Playing Note: Middle C\n";
 	SendMidiNote(
 		hMidiOut,
 		/*channel*/ 0,

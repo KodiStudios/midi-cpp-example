@@ -1,6 +1,10 @@
 # Introduction
 
-This project is a Demo of how to use Midi C++ Windows Apis to play any Note on a selected Instrument. For example, play Middle C Note on Guitar.
+This project is a Demo of how to use Midi C++ Windows Apis to play any Note on a selected Instrument. For example it plays Middle C Note on Guitar.
+
+## GitHub Repo
+
+<https://github.com/KodiStudios/midi-cpp-console>
 
 ## Download
 
@@ -33,11 +37,11 @@ Here's Midi C++ source code to play Middle C Note on Guitar:
 #include <iostream>
 #include <thread>
 
-// Midi message is 4 bytes.
+// Midi Message is 4 bytes.
 // Windows Midi midiOutShortMsg() Api passes
 // those 4 bytes as DWORD type.
-// Use Union structure to easily overlap DWORD onto 
-// Midi's 4 bytes.
+// Use C++ Union structure to easily overlap DWORD onto 
+// Midi's 4 bytes and initialize these bytes to 0
 union MidiMessage {
 	BYTE dataByte[4];
 	DWORD dataDWord{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
@@ -117,10 +121,10 @@ int main()
 		/*fdwOpen*/ CALLBACK_NULL
 	);
 
-	std::cout << "Select Instrument\n";
+	std::cout << "Select Midi Instrument: Guitar\n";
 	SelectMidiInstrument(hMidiOut, /*channel*/ 0, /*instrument: Guitar*/ 24);
 
-	std::cout << "Start Playing Note\n";
+	std::cout << "Start Playing Note: Middle C\n";
 	SendMidiNote(
 		hMidiOut,
 		/*channel*/ 0,
@@ -144,7 +148,7 @@ int main()
 }
 ```
 
-Full Source Code in Repo:  
+Full Source Code in GitHub Repo:  
 [MidiCppConsole.cpp](https://github.com/KodiStudios/midi-cpp-console/blob/main/MidiCppConsole/MidiCppConsole.cpp)
 
 ## Details
