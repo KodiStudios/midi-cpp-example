@@ -1,8 +1,8 @@
-## Introduction
+# Introduction
 
 This project is a Demo of how to use Midi C++ Windows Apis to play any Note on a selected Instrument. For example, play Middle C Note on Guitar.
 
-## Download 
+## Download
 
 Compiled App:  
 [MidiCppConsole.exe](https://github.com/KodiStudios/midi-cpp-console/releases/latest)
@@ -10,12 +10,12 @@ Compiled App:
 Requirements: Windows  
 For example: Windows 7, Windows 10, Windows 11
 
-## Source Code 
+## Source Code
 
 Here's Midi C++ source code to play Middle C Note on Guitar:
 
 ```C++
-// Copyright (c) Kodi Studios 2021.
+// Copyright (c) Kodi Studios 2023.
 // Licensed under the MIT license.
 
 // REQUIREMENTS!
@@ -39,8 +39,8 @@ Here's Midi C++ source code to play Middle C Note on Guitar:
 // Use Union structure to easily overlap DWORD onto 
 // Midi's 4 bytes.
 union MidiMessage {
-	BYTE bData[4];
-	DWORD dwData{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
+	BYTE dataByte[4];
+	DWORD dataDWord{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
 };
 
 // Plays Midi Note
@@ -69,12 +69,12 @@ void SendMidiNote(
 	statusByte = statusByte | channel;         // 0b 1001 CCCC
 
 	MidiMessage midiMessage;
-	midiMessage.bData[0] = statusByte;  // MIDI Status byte
-	midiMessage.bData[1] = pitch;       // First MIDI data byte
-	midiMessage.bData[2] = velocity;    // Second MIDI data byte
+	midiMessage.dataByte[0] = statusByte;  // MIDI Status byte
+	midiMessage.dataByte[1] = pitch;       // First MIDI data byte
+	midiMessage.dataByte[2] = velocity;    // Second MIDI data byte
 	// Byte [3] is unused
 
-	midiOutShortMsg(hMidiOut, midiMessage.dwData);
+	midiOutShortMsg(hMidiOut, midiMessage.dataDWord);
 }
 
 void SelectMidiInstrument(
@@ -97,11 +97,11 @@ void SelectMidiInstrument(
 	statusByte |= channel;                       // 0b 1100 CCCC
 
 	MidiMessage midiMessage;
-	midiMessage.bData[0] = statusByte;       // MIDI Status byte
-	midiMessage.bData[1] = instrument;       // First MIDI data byte
+	midiMessage.dataByte[0] = statusByte;       // MIDI Status byte
+	midiMessage.dataByte[1] = instrument;       // First MIDI data byte
 	// Bytes [2] and [3] are unused
 
-	midiOutShortMsg(hMidiOut, midiMessage.dwData);
+	midiOutShortMsg(hMidiOut, midiMessage.dataDWord);
 }
 
 int main()
@@ -150,6 +150,7 @@ Full Source Code in Repo:
 ## Details
 
 Windows Midi Apis used:  
+
 ```C++
 MMRESULT midiOutOpen(...)
 MMRESULT midiOutShortMsg(...)

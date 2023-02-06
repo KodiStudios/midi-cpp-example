@@ -1,4 +1,4 @@
-// Copyright (c) Kodi Studios 2021.
+// Copyright (c) Kodi Studios 2023.
 // Licensed under the MIT license.
 
 // REQUIREMENTS!
@@ -22,8 +22,8 @@
 // Use Union structure to easily overlap DWORD onto 
 // Midi's 4 bytes.
 union MidiMessage {
-	BYTE bData[4];
-	DWORD dwData{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
+	BYTE dataByte[4];
+	DWORD dataDWord{ 0 }; // Note: because it's a "union", this also zeros out all 4 bytes in bData array
 };
 
 // Plays Midi Note
@@ -52,12 +52,12 @@ void SendMidiNote(
 	statusByte = statusByte | channel;         // 0b 1001 CCCC
 
 	MidiMessage midiMessage;
-	midiMessage.bData[0] = statusByte;  // MIDI Status byte
-	midiMessage.bData[1] = pitch;       // First MIDI data byte
-	midiMessage.bData[2] = velocity;    // Second MIDI data byte
+	midiMessage.dataByte[0] = statusByte;  // MIDI Status byte
+	midiMessage.dataByte[1] = pitch;       // First MIDI data byte
+	midiMessage.dataByte[2] = velocity;    // Second MIDI data byte
 	// Byte [3] is unused
 
-	midiOutShortMsg(hMidiOut, midiMessage.dwData);
+	midiOutShortMsg(hMidiOut, midiMessage.dataDWord);
 }
 
 void SelectMidiInstrument(
@@ -80,11 +80,11 @@ void SelectMidiInstrument(
 	statusByte |= channel;                       // 0b 1100 CCCC
 
 	MidiMessage midiMessage;
-	midiMessage.bData[0] = statusByte;       // MIDI Status byte
-	midiMessage.bData[1] = instrument;       // First MIDI data byte
+	midiMessage.dataByte[0] = statusByte;       // MIDI Status byte
+	midiMessage.dataByte[1] = instrument;       // First MIDI data byte
 	// Bytes [2] and [3] are unused
 
-	midiOutShortMsg(hMidiOut, midiMessage.dwData);
+	midiOutShortMsg(hMidiOut, midiMessage.dataDWord);
 }
 
 int main()
