@@ -1,6 +1,6 @@
 ## Introduction
 
-This project is a Demo of how to use Midi C++ Windows Apis to play any Note on Selected Instrument.
+This project is a Demo of how to use Midi C++ Windows Apis to play any Note on a selected Instrument. For example, play Middle C Note on Guitar.
 
 ## Download 
 
